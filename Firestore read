@@ -1,0 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+final recipesRef = FirebaseFirestore.instance.collection('recipes');
+
+// Get all recipes
+Stream<List<Map<String,dynamic>>> getRecipes() {
+  return recipesRef.snapshots().map((snapshot) =>
+      snapshot.docs.map((doc) => doc.data()).toList());
+}
+
+// Add new recipe
+Future<void> addRecipe(Map<String,dynamic> data) async {
+  await recipesRef.add(data);
+}

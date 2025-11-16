@@ -1,0 +1,223 @@
+// ------------------------------
+// Mixology Hub - All-in-One Starter
+// Flutter + Firebase (Free & Premium)
+// ------------------------------
+
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+// ------------------------------
+// Main
+// ------------------------------
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MixologyHubApp());
+}
+
+// ------------------------------
+// App
+// ------------------------------
+class MixologyHubApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Mixology Hub',
+      theme: ThemeData(
+        primaryColor: Colors.black,
+        accentColor: Colors.amber,
+        fontFamily: 'Montserrat',
+      ),
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      routes: {
+        '/': (context) => SplashScreen(),
+        '/home': (context) => HomeScreen(),
+      },
+    );
+  }
+}
+
+// ------------------------------
+// Services
+// ------------------------------
+class AuthService {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User? get currentUser => _auth.currentUser;
+
+  Future<User?> signInEmail(String email, String password) async {
+    final res = await _auth.signInWithEmailAndPassword(email: email, password: password);
+    return res.user;
+  }
+
+  Future<User?> signUpEmail(String email, String password) async {
+    final res = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+    return res.user;
+  }
+
+  Future<void> signOut() async {
+    await _auth.signOut();
+  }
+}
+
+class FirestoreService {
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  Stream<List<Map<String,dynamic>>> getRecipes({bool premium = false}) {
+    return _db.collection('recipes')
+      .where('premium', isEqualTo: premium)
+      .snapshots()
+      .map((snap) => snap.docs.map((doc) => doc.data()).toList());
+  }
+
+  Stream<List<Map<String,dynamic>>> getSpirits({bool premium = false}) {
+    return _db.collection('spirits')
+      .where('premium', isEqualTo: premium)
+      .snapshots()
+      .map((snap) => snap.docs.map((doc) => doc.data()).toList());
+  }
+
+  Stream<List<Map<String,dynamic>>> getSyrups({bool premium = false}) {
+    return _db.collection('syrups')
+      .where('premium', isEqualTo: premium)
+      .snapshots()
+      .map((snap) => snap.docs.map((doc) => doc.data()).toList());
+  }
+
+  Stream<List<Map<String,dynamic>>> getInfusions({bool premium = false}) {
+    return _db.collection('infusions')
+      .where('premium', isEqualTo: premium)
+      .snapshots()
+      .map((snap) => snap.docs.map((doc) => doc.data()).toList());
+  }
+
+  Stream<List<Map<String,dynamic>>> getWine({bool premium = false}) {
+    return _db.collection('wine')
+      .where('premium', isEqualTo: premium)
+      .snapshots()
+      .map((snap) => snap.docs.map((doc) => doc.data()).toList());
+  }
+
+  Stream<List<Map<String,dynamic>>> getBeer({bool premium = false}) {
+    return _db.collection('beer')
+      .where('premium', isEqualTo: premium)
+      .snapshots()
+      .map((snap) => snap.docs.map((doc) => doc.data()).toList());
+  }
+}
+
+class PremiumService {
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  Future<bool> isPremium(String uid) async {
+    final doc = await _db.collection('users').doc(uid).get();
+    return doc.data()?['premium'] ?? false;
+  }
+}
+
+// ------------------------------
+// Models
+// ------------------------------
+class Recipe {
+  final String id, name, difficulty, category, imageUrl;
+  final List<String> ingredients, steps;
+  final bool premium;
+
+  Recipe({required this.id, required this.name, required this.ingredients, required this.steps,
+    required this.imageUrl, required this.difficulty, required this.category, required this.premium});
+}
+
+// Repeat similar model structure for Spirits, Syrups, Infusions, Wine, Beer
+
+// ------------------------------
+// Screens
+// ------------------------------
+class SplashScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    Future.delayed(Duration(seconds: 2), () {
+      Navigator.pushReplacementNamed(context, '/home');
+    });
+    return Scaffold(
+      body: Center(
+        child: Text('Mixology Hub', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+      ),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  final FirestoreService _fs = FirestoreService();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Mixology Hub")),
+      body: ListView(
+        children: [
+          SectionWidget(title: "Free Recipes", stream: _fs.getRecipes(premium: false)),
+          SectionWidget(title: "Premium Recipes", stream: _fs.getRecipes(premium: true)),
+          SectionWidget(title: "Spirits", stream: _fs.getSpirits()),
+          SectionWidget(title: "Syrups", stream: _fs.getSyrups(premium: true)),
+          SectionWidget(title: "Infusions", stream: _fs.getInfusions(premium: true)),
+          SectionWidget(title: "Wine", stream: _fs.getWine()),
+          SectionWidget(title: "Beer", stream: _fs.getBeer()),
+        ],
+      ),
+    );
+  }
+}
+
+// ------------------------------
+// Widgets
+// ------------------------------
+class SectionWidget extends StatelessWidget {
+  final String title;
+  final Stream<List<Map<String,dynamic>>> stream;
+
+  SectionWidget({required this.title, required this.stream});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(padding: EdgeInsets.all(8.0), child: Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+        Container(
+          height: 180,
+          child: StreamBuilder<List<Map<String,dynamic>>>(
+            stream: stream,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
+              final items = snapshot.data!;
+              return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  final item = items[index];
+                  return Container(
+                    width: 150,
+                    margin: EdgeInsets.all(8),
+                    child: Column(
+                      children: [
+                        Image.network(item['imageUrl'], height: 100, width: 150, fit: BoxFit.cover),
+                        SizedBox(height: 5),
+                        Text(item['name'], maxLines: 1, overflow: TextOverflow.ellipsis),
+                        if (item['premium'] == true) Icon(Icons.star, color: Colors.amber, size: 16),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// ------------------------------
+// END OF ALL-IN-ONE STARTER
+// ------------------------------

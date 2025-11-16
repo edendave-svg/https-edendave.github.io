@@ -1,0 +1,32 @@
+mixology_hub/
+├── lib/
+│   ├── main.dart
+│   ├── app.dart
+│   ├── screens/
+│   │   ├── splash_screen.dart
+│   │   ├── home_screen.dart
+│   │   ├── recipe_list_screen.dart
+│   │   ├── recipe_detail_screen.dart
+│   │   ├── spirits_screen.dart
+│   │   ├── syrups_screen.dart
+│   │   ├── infusions_screen.dart
+│   │   ├── wine_screen.dart
+│   │   ├── beer_screen.dart
+│   │   └── profile_screen.dart
+│   ├── services/
+│   │   ├── auth_service.dart
+│   │   ├── firestore_service.dart
+│   │   └── premium_service.dart
+│   ├── models/
+│   │   ├── recipe.dart
+│   │   ├── spirit.dart
+│   │   ├── syrup.dart
+│   │   ├── infusion.dart
+│   │   ├── wine.dart
+│   │   └── beer.dart
+│   └── widgets/
+│       └── recipe_card.dart
+├── pubspec.yaml
+└── assets/
+    ├── images/
+    └── icons/

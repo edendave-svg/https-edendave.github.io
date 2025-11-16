@@ -1,0 +1,5 @@
+users        -> uid, name, email, premium(bool), avatarUrl
+recipes      -> id, name, ingredients[], steps[], imageUrl, difficulty, category, premium(bool)
+spirits      -> id, name, description, imageUrl, category
+tutorials    -> id, title, videoUrl, description, premium(bool)
+premium_plans-> id, name, price, duration, features[]

@@ -1,0 +1,99 @@
+{
+  "users": [
+    {
+      "uid": "user_001",
+      "name": "Test User",
+      "email": "test@example.com",
+      "premium": false,
+      "avatarUrl": "https://via.placeholder.com/100"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "recipe_free_001",
+      "name": "Mojito",
+      "ingredients": ["50ml White Rum","8 Mint leaves","25ml Lime juice","2 tsp Sugar","Soda Water"],
+      "steps": ["Muddle mint with sugar and lime","Add rum and ice","Top with soda","Garnish with mint"],
+      "imageUrl": "https://via.placeholder.com/150",
+      "difficulty": "Easy",
+      "category": "Cocktail",
+      "premium": false
+    },
+    {
+      "id": "recipe_premium_001",
+      "name": "Old Fashioned",
+      "ingredients": ["50ml Bourbon","1 Sugar cube","2 dashes Angostura bitters","Orange twist"],
+      "steps": ["Place sugar cube in glass","Add bitters","Muddle","Add bourbon and ice","Stir gently","Garnish with orange twist"],
+      "imageUrl": "https://via.placeholder.com/150",
+      "difficulty": "Medium",
+      "category": "Cocktail",
+      "premium": true
+    }
+    // ... add other recipes here
+  ],
+  "spirits": [
+    {
+      "id": "spirit_free_001",
+      "name": "Gin",
+      "description": "Distilled drink with juniper berries",
+      "imageUrl": "https://via.placeholder.com/150",
+      "category": "Gin",
+      "premium": false
+    },
+    {
+      "id": "spirit_premium_001",
+      "name": "Hendrick's Gin",
+      "description": "Scottish gin infused with rose and cucumber botanicals.",
+      "imageUrl": "https://via.placeholder.com/150",
+      "category": "Gin",
+      "premium": true
+    }
+    // ... add other spirits here
+  ],
+  "syrups": [
+    {
+      "id": "syrup_001",
+      "name": "Vanilla Simple Syrup",
+      "ingredients": ["1 cup sugar","1 cup water","1 vanilla bean"],
+      "steps": ["Boil sugar and water","Add split vanilla bean","Simmer 10 min","Cool and store"],
+      "imageUrl": "https://via.placeholder.com/150",
+      "premium": true
+    }
+    // ... add other syrups here
+  ],
+  "infusions": [
+    {
+      "id": "infusion_001",
+      "name": "Citrus Gin Infusion",
+      "ingredients": ["500ml gin","1 orange peel","1 lemon peel"],
+      "steps": ["Combine gin and peels","Infuse 48 hours","Strain","Bottle"],
+      "imageUrl": "https://via.placeholder.com/150",
+      "premium": true
+    }
+    // ... add other infusions here
+  ],
+  "wine": [
+    {
+      "id": "wine_001",
+      "name": "Château Margaux 2015",
+      "region": "Bordeaux, France",
+      "type": "Red",
+      "description": "Full-bodied wine with blackcurrant and cedar notes.",
+      "imageUrl": "https://via.placeholder.com/150",
+      "premium": true
+    }
+    // ... add other wines here
+  ],
+  "beer": [
+    {
+      "id": "beer_001",
+      "name": "Guinness Draught",
+      "type": "Stout",
+      "origin": "Ireland",
+      "description": "Dark beer with creamy head, roasted malt flavor.",
+      "imageUrl": "https://via.placeholder.com/150",
+      "premium": true
+    }
+    // ... add other beers here
+  ]
+}

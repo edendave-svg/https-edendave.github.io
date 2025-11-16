@@ -1,0 +1,22 @@
+[
+  {
+    "id": "recipe_001",
+    "name": "Mojito",
+    "ingredients": ["50ml White Rum", "8 Mint leaves", "25ml Lime juice", "2 tsp Sugar", "Soda Water"],
+    "steps": ["Muddle mint leaves with sugar and lime", "Add rum and ice", "Top with soda water", "Garnish with mint"],
+    "imageUrl": "https://via.placeholder.com/300",
+    "difficulty": "Easy",
+    "category": "Cocktail",
+    "premium": false
+  },
+  {
+    "id": "recipe_002",
+    "name": "Margarita",
+    "ingredients": ["50ml Tequila", "25ml Triple Sec", "25ml Lime juice", "Salt rim"],
+    "steps": ["Rim glass with salt", "Shake tequila, triple sec, lime juice with ice", "Strain into glass"],
+    "imageUrl": "https://via.placeholder.com/300",
+    "difficulty": "Medium",
+    "category": "Cocktail",
+    "premium": true
+  }
+]

@@ -1,0 +1,9 @@
+Repeat similar ListScreen + DetailScreen for: spirits, syrups, infusions, wine, beer.
+
+Conditional visibility: premium = true → only show if user premium.
+
+Connect In-App Purchase / Stripe / RevenueCat to allow upgrading users to premium.
+
+Images/videos → store in Firebase Storage, link URLs in Firestore.
+
+Add SplashScreen, HomeScreen, BottomNavigation, ProfileScreen for UI navigation

@@ -1,0 +1,53 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class FirestoreService {
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  // Recipes
+  Stream<List<Map<String,dynamic>>> getRecipes({bool premium = false}) {
+    return _db.collection('recipes')
+      .where('premium', isEqualTo: premium)
+      .snapshots()
+      .map((snap) => snap.docs.map((doc) => doc.data()).toList());
+  }
+
+  // Spirits
+  Stream<List<Map<String,dynamic>>> getSpirits({bool premium = false}) {
+    return _db.collection('spirits')
+      .where('premium', isEqualTo: premium)
+      .snapshots()
+      .map((snap) => snap.docs.map((doc) => doc.data()).toList());
+  }
+
+  // Syrups
+  Stream<List<Map<String,dynamic>>> getSyrups({bool premium = false}) {
+    return _db.collection('syrups')
+      .where('premium', isEqualTo: premium)
+      .snapshots()
+      .map((snap) => snap.docs.map((doc) => doc.data()).toList());
+  }
+
+  // Infusions
+  Stream<List<Map<String,dynamic>>> getInfusions({bool premium = false}) {
+    return _db.collection('infusions')
+      .where('premium', isEqualTo: premium)
+      .snapshots()
+      .map((snap) => snap.docs.map((doc) => doc.data()).toList());
+  }
+
+  // Wine
+  Stream<List<Map<String,dynamic>>> getWine({bool premium = false}) {
+    return _db.collection('wine')
+      .where('premium', isEqualTo: premium)
+      .snapshots()
+      .map((snap) => snap.docs.map((doc) => doc.data()).toList());
+  }
+
+  // Beer
+  Stream<List<Map<String,dynamic>>> getBeer({bool premium = false}) {
+    return _db.collection('beer')
+      .where('premium', isEqualTo: premium)
+      .snapshots()
+      .map((snap) => snap.docs.map((doc) => doc.data()).toList());
+  }
+}

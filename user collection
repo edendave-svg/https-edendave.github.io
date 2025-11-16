@@ -1,0 +1,16 @@
+[
+  {
+    "uid": "user_001",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "premium": false,
+    "avatarUrl": "https://via.placeholder.com/150"
+  },
+  {
+    "uid": "user_002",
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "premium": true,
+    "avatarUrl": "https://via.placeholder.com/150"
+  }
+]

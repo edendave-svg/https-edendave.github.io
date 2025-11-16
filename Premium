@@ -1,0 +1,4 @@
+Future<bool> isPremium(String uid) async {
+  final doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+  return doc.data()?['premium'] ?? false;
+}

@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // users collection: user can read/write own doc
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+    // other collections: free items readable by all; premium items only readable if user's premium == true
+    match /{col}/{docId} {
+      allow read: if resource.data.premium == false ||
+                  (request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.premium == true);
+      allow write: if request.auth != null; // limit later as admin-only
+    }
+  }
+}
